@@ -3,7 +3,7 @@ from .models import Profile
 # Create your views here.
 
 def my_profile_view(request):
-	profile = profile.objects.get(user=request.user)
+	profile = Profile.objects.get(user=request.user)
 
 	context = {
 		'profile':profile,
