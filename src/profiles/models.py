@@ -63,9 +63,9 @@ class Relationship(models.Model):
         sender = models.ForignKey(Profile, on_delete=models.CASCADE, related_name='sender')
         receiver = models.ForignKey(Profile, on_delete=models.CASCADE, related_name='receiver')
         status = models.CharField(max_length=8, choices=STATUS_CHOICES)
-         updated = models.DateTimeField(auto_now=True)
-         created = models.DateTimeField(auto_now_add=True)
+        updated = models.DateTimeField(auto_now=True)
+        created = models.DateTimeField(auto_now_add=True)
 
-         def _str_(self):
+        def _str_(self):
             return f"{self.sender}-{self.receiver}-{self.status}"
              
