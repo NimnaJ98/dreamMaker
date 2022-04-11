@@ -37,7 +37,7 @@ class Profile(models.Model):
 
     #string representation
     def __str__(self):
-        return f"{self.user.username}-{self.created.straftime('%d-%m-%y')}"
+        return f"{self.user.username}-{self.created.strftime('%d-%m-%y')}"
 
     #generate a random slug when there're 2 or more profiles with the same first name
     __initial_name = None
