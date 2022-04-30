@@ -34,16 +34,14 @@
                     <form action="{% url 'posts:like-post-view' %}" method="POST" class="like-form" id="{{obj.id}}">
                         {% csrf_token %}
                         <input type="hidden" name="post_id" value={{obj.id}}>
-    
-                            <button type="submit" class="ui button like-btn{{obj.id}}" style="background:transparent;">
-                                <img src="{% static 'images\pet_like1.png' %}" class="imgLike">
+                            <button type="submit" class="ui button like-btn{{obj.id}}">
                                 {% if profile not in obj.liked.all %}
                                     Like
                                 {% else %}
                                     Unlike
                                 {% endif %}
                             </button>
-
+                            <br>
                             <div class="ui grid">
                                 <div class="column">
                                     <div class="like-count{{obj.id}}"> {{obj.num_likes}} </div>
@@ -80,7 +78,7 @@
                     {% csrf_token %}
                     <input type="hidden" name="post_id" value={{obj.id}}>
                     {{ c_form }}
-                    <button type="submit" name="submit_c_form" class="ui primary button mt-5 w-full">Send</button>
+                    <button type="submit" name="submit_c_form" class="ui primary button mt-5 w-full">Comment</button>
                 </form>
             </div>
         </div>

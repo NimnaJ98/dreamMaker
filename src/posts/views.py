@@ -33,6 +33,7 @@ def post_comment_create_and_list_view(request):
             instance.save()
             p_form = PostModelForm()
             post_added = True
+        return redirect('posts:main-post-view')
 
     if 'submit_c_form' in request.POST:
         c_form = CommentModelForm(request.POST)
@@ -42,6 +43,7 @@ def post_comment_create_and_list_view(request):
             instance.post = Post.objects.get(id=request.POST.get('post_id'))
             instance.save()
             c_form = CommentModelForm()
+        return redirect('posts:main-post-view')
 
     context = {
         'qs': qs,
