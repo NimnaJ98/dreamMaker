@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    Invite Friends
+{% endblock title %}
+
+
+{% block content %}
+<div class="ui grid" style="width: 50%; margin: auto;">
+    <div class="row">
+        <ul>
+            {% for item in qs %}
+                <div class="ui inverted segment" style="background-color: #a8a6a5;">
+                    <div class="ui inverted relaxed divided list">
+                    <li>
+                        <i class="paw icon"></i>
+                        {{item}}
+                    </li>
+                    </div>
+                </div>
+            {% endfor %}   
+        </ul>
+    </div>
+</div>
+{% endblock content %}
+   
