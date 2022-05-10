@@ -152,7 +152,7 @@ def send_invitations(request):
 
         rel = Relationship.objects.create(sender=sender, receiver=receiver, status='send')
         return redirect(request.META.get('HTTP_REFERER'))
-    return redirect('profiles:pet-profile-view')
+    return redirect('profiles:my-profile-view')
 
 @login_required
 def remove_from_friends(request):
@@ -167,7 +167,7 @@ def remove_from_friends(request):
         )
         rel.delete()
         return redirect(request.META.get('HTTP_REFERER'))
-    return redirect('profiles:pet-profile-view')
+    return redirect('profiles:my-profile-view')
 
     
 
