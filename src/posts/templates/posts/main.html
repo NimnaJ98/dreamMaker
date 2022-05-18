@@ -13,10 +13,10 @@
                 <div class="ui grid">
                     <div class="row">
                         <!--Update and delete buttons will be only visible if the user is the author of the post-->
-                        {% ifequal request.user obj.author.user %}
+                        {% if request.user == obj.author.user %}
                             <a href="{% url 'posts:post-update' obj.pk %}"><button class="ui button bwhite-lg" style="background-color: transparent !important;">Update</button></a>
                             <a href="{% url 'posts:post-delete' obj.pk %}"><button class="ui button bwhite-lg" style="background-color: transparent !important;">Delete</button></a>
-                        {% endifequal %}
+                        {% endif %}
                     </div>
                 </div>   
                 </div>
