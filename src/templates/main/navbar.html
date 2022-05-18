@@ -1,5 +1,6 @@
 {% url 'home-view' as path_to_home %}
 {% url 'posts:main-post-view' as path_to_posts %}
+{% url 'auditions:create-audition-view' as path_to_auditions %}
 {% url 'profiles:my-profile-view' as path_to_my_profile %}
 {% url 'profiles:my-invites-view' as path_to_received_invites %}
 {% url 'profiles:all-profiles-view' as path_to_all_profiles %}
@@ -15,6 +16,9 @@
     {% if request.user.is_authenticated %}
     <a href="{{path_to_posts}}" class="{% if request.path == path_to_posts %}active{% endif %} item">
         Feed
+    </a>
+    <a href="{{path_to_auditions}}" class="{% if request.path == path_to_auditions %}active{% endif %} item">
+        Auditions
     </a>
     {% endif %}
 

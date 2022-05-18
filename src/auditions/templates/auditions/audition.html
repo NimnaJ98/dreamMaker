@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}auditions page{% endblock title %}
+
+{% block content %}
+
+
+<div class="ui grid mt-5" style="width: 75%; margin: auto;">
+    <div class="twelve wide column">
+    {% for obj in qs %}
+        <div class="ui fluid card">
+            <div class="content">
+                <div class="right floated meta">
+                <div class="ui grid">
+                    <div class="row">
+                        <!--Update and delete buttons will be only visible if the user is the director of the audition-->
+                        {% if request.user == obj.director.user %}
+                            <a href="{% url 'auditions:audition-update' obj.pk %}"><button class="ui button bwhite-lg" style="background-color: transparent !important;">Update</button></a>
+                            <a href="{% url 'auditions:audition-delete' obj.pk %}"><button class="ui button bwhite-lg" style="background-color: transparent !important;">Delete</button></a>
+                        {% endif %}
+                    </div>
+                </div>   
+                </div>
+                <img class="ui avatar image" src={{obj.director.avatar.url}}> 
+                {{ obj.director.user }} - {{ obj.created|timesince}} ago
+            </div>
+            <div class="ui fluid image">
+                {% if obj.image %}
+                    <img src={{obj.image.url}}>
+                {% endif %}
+            </div>
+            <div class="content">
+                <p> {{ obj.name }} - {{ obj.type }}</p>
+                <p> Qualifications: {{ obj.qualifications }} </p>
+                <p> Requirements: {{ obj.requirements }} </p>
+                <p> Due Date: {{ obj.due_date }} </p>
+                <p>Additional Info: {{ obj.additional_info }} </p>
+                <div class="right floated">
+                    <form action="{% url 'auditions:star-audition-view' %}" method="POST" class="like-form" id="{{obj.id}}">
+                        {% csrf_token %}
+                        <input type="hidden" name="audition_id" value={{obj.id}}>
+                            <button type="submit" class="ui button like-btn{{obj.id}}">
+                                {% if profile not in obj.starred.all %}
+                                    Star
+                                {% else %}
+                                    Unstar
+                                {% endif %}
+                            </button>
+                            <br>
+                            <div class="ui grid">
+                                <div class="column">
+                                    <div class="like-count{{obj.id}}"> {{obj.num_stars}} </div>
+                                </div>
+                                <div class="column">
+                                    Stars
+                                </div>
+                            </div> 
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    <div class="four wide column">
+        <div class="ui segment" style="width: 400px !important; margin-left: 35px;">
+            {% if audition_added %}
+                <div class="ui green message">Audition added</div>
+            {% endif %}
+            <form action="" method="POST" class='ui form' enctype="multipart/form-data">
+                {% csrf_token %}
+                {{a_form.as_p}}
+                <button type='submit' name="submit_p_form" class="ui positive button btnSend w-full mt-5">Send</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
