@@ -9,7 +9,7 @@ db.sqlite3
 dreamMaker.sqlite3
 media
 **/migrations/* 
-!migrations/__init__.py
+!**/migrations/__init__.py
 !static_cdn/media_root/avatars/*
 !static_cdn/media_root/posts/*
 
