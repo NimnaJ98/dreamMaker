@@ -11,7 +11,7 @@
 `.\dream-maker-virtual-env\Scripts\activate`
 
 - **De-activate virtual environment**
-`.\dream-maker-virtual-env\Scripts\deactivate.bat`
+`deactivate`
 
 - **Install required modules**
 `pip install -r requirements.txt`
