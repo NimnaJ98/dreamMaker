@@ -2,6 +2,10 @@ from django.db import models
 from django.core.validators import FileExtensionValidator
 from profiles.models import Profile
 # Create your models here.
+from django.db import models
+from django.core.validators import FileExtensionValidator
+from profiles.models import Profile
+# Create your models here.
 
 class Post(models.Model):
     content = models.TextField()
@@ -47,6 +51,3 @@ class Like(models.Model):
     
     def __str__(self):
         return f"{self.user}-{self.post}-{self.value}"
-
-    
-    

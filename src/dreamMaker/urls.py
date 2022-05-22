@@ -21,9 +21,13 @@ from .views import home_view
 
 
 urlpatterns = [
+    path('admin/clearcache/', include('clearcache.urls')),
     path('admin/', admin.site.urls),
     path('', home_view, name='home-view'),
-    path('profiles/', include('profiles.urls', namespace='profiles'))
+    path('accounts/', include('allauth.urls')),
+    path('profiles/', include('profiles.urls', namespace='profiles')),
+    path('posts/', include('posts.urls', namespace='posts')),
+    path('auditions/', include('auditions.urls', namespace='auditions'))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

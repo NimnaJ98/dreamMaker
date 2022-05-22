@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    My Invites
+{% endblock title %}
+
+
+{% block content %}
+    
+    {% if is_empty %}
+    <div class="ui purple message" style="margin-top: 25px;">No invitations here...</div>
+    {% endif %}
+            
+    {% for obj in qs %}
+        <div class="ui segment" style="width: 75%; margin: auto;">
+            <div class="ui grid">
+                <div class="row">
+                    <div class="three wide column">
+                        <img class="ui small circular image" src={{obj.avatar.url}}>
+                    </div>
+                    <div class="thirteen wide column">
+                        <h3>{{obj.user}}</h3>
+                        <p>{{obj.bio}}</p>
+                        <a href=""><button class="ui black button w-big mb-5">See Profile</button></a>
+                        <p></p>
+                        
+                        <form action="{% url 'profiles:accept-invite' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="profile_pk" value={{obj.pk}}>
+                            <button type="submit" class="ui black basic button mb-5 w-big">
+                                <i class="check icon"></i>Accept Invitation
+                            </button>
+                        </form>
+                        <hr style="border: 0;">
+                        <form action="{% url 'profiles:reject-invite' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="profile_pk" value={{obj.pk}}>
+                            <button type="submit" class="ui negative basic button mb-5 w-big">
+                                <i class="close icon"></i>Reject Invitation
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}   
+    
+{% endblock content %}
+    
+    
