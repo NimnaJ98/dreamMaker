@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'profiles',
     'auditions',
 
+    'clearcache',
+
     #django all-auth
     'allauth',
     'allauth.account',

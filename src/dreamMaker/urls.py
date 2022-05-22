@@ -21,6 +21,7 @@ from .views import home_view
 
 
 urlpatterns = [
+    path('admin/clearcache/', include('clearcache.urls')),
     path('admin/', admin.site.urls),
     path('', home_view, name='home-view'),
     path('accounts/', include('allauth.urls')),

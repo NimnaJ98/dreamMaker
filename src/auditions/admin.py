@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Audition, EventComment, Interest
+from .models import Audition, AuditionType
+
 # Register your models here.
 
 admin.site.register(Audition)
-admin.site.register(EventComment)
-admin.site.register(Interest)
+admin.site.register(AuditionType)

@@ -1,52 +1,57 @@
 from django.db import models
-
-# Create your models here.
-from django.db import models
-from django.core.validators import FileExtensionValidator
 from profiles.models import Profile
+from django.core.validators import FileExtensionValidator
+
 # Create your models here.
-
-class Audition(models.Model):
-    content = models.TextField()
-    image = models.ImageField(upload_to='auditions', validators=[FileExtensionValidator(['png', 'jpg', 'jpeg'])], blank=True)
-    interested = models.ManyToManyField(Profile, blank=True, related_name='interests')
-    updated = models.DateTimeField(auto_now=True)
-    created = models.DateTimeField(auto_now_add=True)
-    organiser = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='auditions')
-
-    def __str__(self):
-        return str(self.content[:20])
-
-    def num_interests(self):
-        return self.interested.all().count()
-
-    def num_eventcomments(self):
-        return self.eventcomment_set.all().count()
+class AuditionType(models.Model):
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255)
+    ordering = models.IntegerField(default=0)
 
     class Meta:
-        ordering = ('-created',)
+        ordering = ['title']
+    
+    def __str__(self):
+        return self.title
 
-class EventComment(models.Model):
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    audition = models.ForeignKey(Audition, on_delete=models.CASCADE)
-    body = models.TextField(max_length=300)
+class Audition(models.Model):
+    director = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='auditions')
+    type = models.ForeignKey(AuditionType, related_name='auditions', on_delete=models.CASCADE)
+    name = models.TextField()
+    image = models.ImageField(upload_to='auditions', validators=[FileExtensionValidator(['png', 'jpg', 'jpeg'])], blank=True)
+    qualifications = models.TextField()
+    requirements = models.TextField()
+    additional_info = models.TextField()
+    due_date = models.DateTimeField()
+    starred = models.ManyToManyField(Profile, blank=True, related_name='stars')
+    participants = models.ManyToManyField(Profile, blank=True, related_name='participants')
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-            return str(self.pk)
+    class Meta:
+        ordering = ['due_date']
 
-INTEREST_CHOICES = (
-    ('Interest', 'Interest'),
-    ('Uninterest', 'Uninterest'),
+    def __str__(self):
+        return self.name
+
+    def starred_profiles(self):
+        return self.starred.all()
+
+    def num_stars(self):
+        return self.starred.all().count()
+
+    
+STAR_CHOICES = (
+    ('Star', 'Star'),
+    ('Unstar', 'Unstar'),
 )
 
-class Interest(models.Model): 
+class Star(models.Model): 
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     audition = models.ForeignKey(Audition, on_delete=models.CASCADE)
-    value = models.CharField(choices=INTEREST_CHOICES, max_length=10)
+    value = models.CharField(choices=STAR_CHOICES, max_length=8)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return f"{self.user}-{self.audition}-{self.value}"
+        return f"{self.user}-{self.post}-{self.value}"
