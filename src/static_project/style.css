@@ -1,0 +1,35 @@
+html{
+    scroll-behavior: smooth;
+}
+body{
+    background: #f8f8f8 !important;
+}
+.segment{
+    margin-top: 30px !important;
+    box-shadow: 0 2px 3px 0 rgba(0,0,0, 0.1) !important;
+    border-radius: 20px !important;
+    
+}
+
+.like-btn{
+    width: fit-content !important;
+}
+
+.w-big{
+    width: 200px !important;
+}
+.nav{
+    border-radius: 25px !important;
+    margin: 15px !important;
+    height: 50px !important;
+    box-shadow: 0 2px 3px 0 rgba(0,0,0, 0.1) !important;
+    background: linear-gradient(45deg, #a28095,#5d5d5d) !important;
+    padding: 10px 0 10px 0 !important;
+}
+.mb-7{
+    margin-bottom: 7px !important;
+}
+.mt-5{
+    margin-top: 5px !important;
+}
+
