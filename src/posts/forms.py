@@ -6,7 +6,7 @@ class PostModelForm(forms.ModelForm):
     content = forms.CharField(widget=forms.Textarea(attrs={'rows':2}))
     class Meta:
         model = Post
-        fields = ('content','image')
+        fields = ('content','image', 'video')
 
 class CommentModelForm(forms.ModelForm):
     body = forms.CharField(label='', 

@@ -5,11 +5,48 @@ home
 {% endblock title %}
 
 {% block content %}
-<<<<<<< HEAD
-{{hello}}
-<br>
-{{user}}
+
+
+{% comment %} <div class="ui placeholder segment">
+	<div class="ui two column very 
+			relaxed stackable grid">
+		<div class="middle aligned column">
+			<div class="ui container">
+				<div style="font-size:50px" face = "Times New Roman" Color="darkblue" align="center">
+					<p><b>Apply, Audition, Land the Part & make your Mark!!</b></p>
+				</div>
+				<div style="font-size:18px" face = "verdana" Color="black" align="justify">
+					<p><b>Chance your Future, Becoming a celebrity is now only a click away, Build your portfolio and let it speak for you.</b></p>
+				</div>
+			</div>
+		</div>
+		<div class="middle aligned column">
+			<div class="ui container">
+				{% load static %} <img src="{% static "images/audi.jpg" %}" alt="stage" align="right" style="width:550px;height:380px;"/ >
+			</div>
+		</div>
+	</div>
+	<div class="ui vertical divider">
+
+	</div>
+</div> {% endcomment %}
+
+
+
+<div class="center">
+	<div class="massive ui blue button" tabindex="0" >
+		I'm Looking for an Audition
+	</div>
+
+  <div class="massive ui blue button" tabindex="0">
+	I'm Looking for participants
+  </div>
+</div>
+
 {% endblock content %}
+
+
+
 
 {% block scripts %}
 <script>
@@ -17,11 +54,4 @@ home
 	console.log('working')
 	})
 </script>
-=======
-{% endblock content %}
-
-{% block scripts %}
-<script></script>
->>>>>>> d5302132746921ea390fb3826529e2359b21a372
 {% endblock scripts %}
-

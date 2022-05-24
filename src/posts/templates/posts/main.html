@@ -27,6 +27,11 @@
                 {% if obj.image %}
                     <img src={{obj.image.url}}>
                 {% endif %}
+                {% if obj.video %}
+                    <video controls autoplay muted id="vid">
+                        <source src={{obj.video.url}} type="video/mp4"></source>
+                    </video>
+                {% endif %}
             </div>
             <div class="content">
                 <p> {{ obj.content }} </p>

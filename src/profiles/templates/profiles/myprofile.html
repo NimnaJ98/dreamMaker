@@ -1,37 +1,3 @@
-<<<<<<< HEAD
-{% extends 'base.html'%}
-
-{%block title%}
-my profile
-{%endblock  title%}
-
-{%block content%}
-
-<h1>my profile:{{profile}}</h1>
-<hr>
-<img src = {{profile.avatar.url}}>
-<br>
-{{profile.avatar.url}}
-<br>
-{{profile.avatar}}
-<hr>
-{{profile.first_name}}
-<br>
-{{profile.last_name}}
-<br>
-{{profile.bio}}
-
-<br>
-{{profile.get_friends_no}}
-<br>
-<ul>
-    {% for friend in profile.get_friends%}
-    <li> {{friend}}</li>
-     {% endfor %}
- </ul>
-<br>
-{%endblock  content%}
-=======
 {% extends 'base.html' %}
 {% block title %}
     My Profile
@@ -75,16 +41,6 @@ my profile
         {% if confirm %}
             <div class="ui purple message">Your profile has been updated.</div>
         {% endif %} 
-        <h3>
-            <a href="{% url 'profiles:profile-detail-view' profile.slug %}">
-                <div class="ui labeled button m-5 w-big">
-                    <div class="ui purple basic button" style="color: #a28095;">
-                        <i class="user icon"></i> {{request.user}}
-                      </div>
-                </div>
-            </a>
-        </h3>
-
             <div class="ui grid">
                 <div class="row">
                     <div class="six wide column">
@@ -92,25 +48,39 @@ my profile
                             <div class="row mt-5">
                                 <button class="ui secondary button mt-5" id='modal-btn'>Update Your Profile</button> 
                             </div>
+                            <div class="ui vertical fluid menu" style="border-radius: 20px;">
+                                <div class="item">
+                                    Name
+                                    <div class="ui purple label"><a href="{% url 'profiles:profile-detail-view' profile.slug %}"> {{ profile.first_name }} &nbsp; {{ profile.last_name }} </a></div>
+                                </div>
+                                <div class="item">
+                                    Posts
+                                    <div class="ui label">{{ profile.get_post_no }}</div>
+                                </div>
+                                <div class="item">
+                                    Auditions
+                                    <div class="ui label">{{ profile.get_audition_no }}</div>
+                                </div>
+                                <div class="item">
+                                    Friends
+                                    <div class="ui label">{{ profile.get_friends_no }}</div>
+                                </div>
+                            </div>
                         </div>
                         <div class="ten wide column">
                             <table class="ui celled orange table" style="border-color: #a28095;"> 
                                 <tbody>
                                     <tr>
-                                        <td>Username</td>
-                                        <td>{{profile.user}}</td>
-                                    </tr>
-                                    <tr>
                                         <td>Name</td>
-                                        <td>{{profile.name}}</td>
+                                        <td>{{profile.user}}</td>
                                     </tr>
                                     <tr>
                                         <td>Bio</td>
                                         <td>{{profile.bio}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Number of Friends</td>
-                                        <td>{{profile.get_friends_no}}</td>
+                                        <td>Address</td>
+                                        <td>{{profile.address}}</td>
                                     </tr>
                                     <tr>
                                         <td>Friends</td>
@@ -124,16 +94,16 @@ my profile
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Number of Posts</td>
-                                        <td>{{profile.get_post_no}}</td>
+                                        <td>Education</td>
+                                        <td>{{profile.education}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Number of Likes</td>
-                                        <td>{{profile.get_likes_given_no}}</td>
+                                        <td>Qualifications</td>
+                                        <td>{{profile.qualifications}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Number of Likes Received</td>
-                                        <td>{{profile.get_likes_received_no}}</td>
+                                        <td>Experience</td>
+                                        <td>{{profile.experience}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -144,4 +114,3 @@ my profile
     
     
 {% endblock content %}
->>>>>>> d5302132746921ea390fb3826529e2359b21a372

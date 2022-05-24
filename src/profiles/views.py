@@ -1,17 +1,3 @@
-<<<<<<< HEAD
-from django.shortcuts import render
-from .models import Profile
-# Create your views here.
-
-def my_profile_view(request):
-	profile = Profile.objects.get(user=request.user)
-
-	context = {
-		'profile':profile,
-	}
-
-	return render (request, 'profiles/myprofile.html',context)
-=======
 from django.shortcuts import redirect, render, get_object_or_404
 from .models import Profile, Relationship
 from .forms import ProfileModelForm
@@ -182,7 +168,3 @@ def remove_from_friends(request):
         rel.delete()
         return redirect(request.META.get('HTTP_REFERER'))
     return redirect('profiles:my-profile-view')
-
-    
-
->>>>>>> d5302132746921ea390fb3826529e2359b21a372

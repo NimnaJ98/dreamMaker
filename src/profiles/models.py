@@ -34,7 +34,7 @@ class ProfileManager(models.Manager):
         return profiles
 
 class Profile(models.Model):
-    #to identify the logged in user
+    #to identify the logged in user 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     #profile data
@@ -55,15 +55,7 @@ class Profile(models.Model):
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
-<<<<<<< HEAD
-    def get_friends(self):
-        return self.friends.all()
-
-    def get_friends_no(self):
-        return self.friends.all().count()
-=======
     objects = ProfileManager()
->>>>>>> d5302132746921ea390fb3826529e2359b21a372
 
     def __str__(self):
         return f"{self.user.username}-{self.created.strftime('%d-%m-%y')}"
@@ -71,25 +63,24 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return reverse("profiles:profile-detail-view", kwargs={"slug": self.slug})
         
-<<<<<<< HEAD
-
-    
-=======
     
 
-    #to grab all the friends to show in petProfile
+    #to grab all the friends to show in Profile
     def get_friends(self):
         return self.friends.all()
 
-    #to grab all the count of friends to show in petProfile
+    #to grab all the count of friends to show in Profile
     def get_friends_no(self):
         return self.friends.all().count()
 
-    #to grab all the count of posts to show in petProfile
+    #to grab all the count of posts to show in Profile
     def get_post_no(self):
         return self.posts.all().count()
+    
+    def get_audition_no(self):
+        return self.auditions.all().count()
 
-    #to grab all the posts to show in petProfile
+    #to grab all the posts to show in Profile
     def get_all_authors_posts(self):
         return self.posts.all()
 
@@ -111,7 +102,6 @@ class Profile(models.Model):
         return total_liked
 
     #generate a random slug when there're 2 or more profiles with the same first name
->>>>>>> d5302132746921ea390fb3826529e2359b21a372
     __initial_name = None
 
     def __init__(self, *args, **kwargs):
@@ -139,10 +129,6 @@ STATUS_CHOICES = (
     ('accepted','accepted')
 )
 
-<<<<<<< HEAD
-
-=======
->>>>>>> d5302132746921ea390fb3826529e2359b21a372
 class RelationshipManager(models.Manager):
     def invitations_received(self, receiver):
         qs = Relationship.objects.filter(receiver=receiver, status='send')
@@ -167,4 +153,3 @@ class Relationship(models.Model):
 
     def __str__(self):
         return f"{self.sender}-{self.receiver}-{self.status}"
-             

@@ -33,3 +33,17 @@ body{
     margin-top: 5px !important;
 }
 
+.registerForm{
+    background: #fff;
+    border-radius: 25px;
+    -webkit-box-shadow: 1px 1px 3px 3px #ccc; 
+    -moz-box-shadow:    1px 1px 3px 3px #ccc; 
+    box-shadow:         1px 1px 3px 3px #ccc; 
+    margin-top: 50px !important;
+    margin: 20px;
+    padding: 20px !important;
+}
+.registerImg{
+    width: max-content;
+    height: max-content;
+}

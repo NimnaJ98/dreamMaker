@@ -1,7 +1,4 @@
 from django.urls import path
-<<<<<<< HEAD
-from .views import my_profile_view
-=======
 from .views import (
     my_profile_view, 
     invites_received_view, 
@@ -14,15 +11,10 @@ from .views import (
     accept_invitation,
     reject_invitation,
 )
->>>>>>> d5302132746921ea390fb3826529e2359b21a372
 
 app_name = 'profiles'
 
 urlpatterns = [
-<<<<<<< HEAD
-		path('myprofile/', my_profile_view, name='my-profile-view' ),
-]
-=======
     path('', ProfileListView.as_view(), name='all-profiles-view'),
     path('myProfile/', my_profile_view, name='my-profile-view'),
     path('my-invites/', invites_received_view, name='my-invites-view'),
@@ -33,5 +25,3 @@ urlpatterns = [
     path('my-invites/accept/', accept_invitation, name='accept-invite'),
     path('my-invites/reject/', reject_invitation, name='reject-invite'),
 ]
-
->>>>>>> d5302132746921ea390fb3826529e2359b21a372
