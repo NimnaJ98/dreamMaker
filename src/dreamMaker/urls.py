@@ -19,13 +19,25 @@ from django.conf import settings
 from django.conf.urls.static import static
 from .views import home_view
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> d5302132746921ea390fb3826529e2359b21a372
 
 urlpatterns = [
+    path('admin/clearcache/', include('clearcache.urls')),
     path('admin/', admin.site.urls),
+<<<<<<< HEAD
     path('',home_view,name='home-view'),
     path('profiles/', include('profiles.urls', namespace='profiles')),
+=======
+    path('', home_view, name='home-view'),
+    path('accounts/', include('allauth.urls')),
+    path('profiles/', include('profiles.urls', namespace='profiles')),
+    path('posts/', include('posts.urls', namespace='posts')),
+    path('auditions/', include('auditions.urls', namespace='auditions'))
+>>>>>>> d5302132746921ea390fb3826529e2359b21a372
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

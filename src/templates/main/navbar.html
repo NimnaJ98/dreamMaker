@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="ui inverted menu nav mb-7">
   <div class="ui container">
     <a href="" class="item">
@@ -6,12 +7,36 @@
     {% if request.user.is_authenticated %}
     <a href="" class="item">
         Home
+=======
+{% url 'home-view' as path_to_home %}
+{% url 'posts:main-post-view' as path_to_posts %}
+{% url 'auditions:main-audition-view' as path_to_auditions %}
+{% url 'profiles:my-profile-view' as path_to_my_profile %}
+{% url 'profiles:my-invites-view' as path_to_received_invites %}
+{% url 'profiles:all-profiles-view' as path_to_all_profiles %}
+{% url 'profiles:invite-profiles-view' as path_to_invites %}
+
+
+
+<div class="ui inverted menu nav mb-7">
+  <div class="ui container">
+    <a href="{{path_to_home}}" class="{% if request.path == path_to_home %}active{% endif %} item">
+        <h3>Dream Maker</h3>
+    </a>
+    {% if request.user.is_authenticated %}
+    <a href="{{path_to_posts}}" class="{% if request.path == path_to_posts %}active{% endif %} item">
+        Feed
+    </a>
+    <a href="{{path_to_auditions}}" class="{% if request.path == path_to_auditions %}active{% endif %} item">
+        Auditions
+>>>>>>> d5302132746921ea390fb3826529e2359b21a372
     </a>
     {% endif %}
 
     <div class="right menu">
         {% if request.user.is_authenticated %}
         <div class="item">
+<<<<<<< HEAD
             <div class="ui floating dropdown icon button teal"> Friends
                 <i class="dropdown icon"></i>
                 <div class="menu">
@@ -23,6 +48,19 @@
                     </a>
                     <a href="" class="item">
                         Received Invites
+=======
+            <div class="ui floating dropdown icon button secondary"> Friends
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a href="{{path_to_all_profiles}}" class="{% if request.path == path_to_all_profiles %}active{% endif %} item">
+                        All Profiles
+                    </a>
+                    <a href="{{path_to_invites}}" class="{% if request.path == path_to_invites %}active{% endif %} item">
+                        Send Invites
+                    </a>
+                    <a href="{{path_to_received_invites}}" class="{% if request.path == path_to_received_invites %}active{% endif %} item">
+                        Received Invites &nbsp; <div class ="ui purple horizontal label">{{invites_num}}</div>
+>>>>>>> d5302132746921ea390fb3826529e2359b21a372
                     </a>
                 </div>
              </div>
@@ -37,6 +75,7 @@
             </form>
             </div>
         
+<<<<<<< HEAD
             <a href="" class="item">
                  {{ request.user }}
             </a>
@@ -46,6 +85,18 @@
             </a>
         {% else %}
         <a href="" class="ui item">
+=======
+            <a href="{{path_to_my_profile}}" class="{% if request.path == path_to_my_profile %}active{% endif %} item">
+                <img src={{picture.url}} class="ui avatar image"> &nbsp;
+                {{ request.user }}
+            </a>
+
+            <a href="{% url 'account_logout' %}" class="ui item">
+                Logout
+            </a>
+        {% else %}
+        <a href="{% url 'account_login' %}" class="ui item">
+>>>>>>> d5302132746921ea390fb3826529e2359b21a372
                 Login
             </a>
         {% endif %}
