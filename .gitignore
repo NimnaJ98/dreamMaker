@@ -6,7 +6,7 @@
 *.pyc
 __pycache__
 db.sqlite3
-dreamMaker.sqlite3
+#dreamMaker.sqlite3
 media
 **/migrations/* 
 !**/migrations/__init__.py
