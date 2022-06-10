@@ -42,7 +42,6 @@
                                 <i class="paw icon"></i>Waiting for Approval
                             </button>
                     {% endif %}
-
                     <!--For removing friends-->
                     {% if request.user in obj.friends.all %}
                     <form action="{% url 'profiles:remove-friend' %}" method="post">

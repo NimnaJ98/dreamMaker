@@ -1,57 +1,59 @@
-{% extends 'base.html'%}
+{% load static %}
+{% url 'home-view' as path_to_home %}
+{% url 'posts:main-post-view' as path_to_posts %}
+{% url 'auditions:main-audition-view' as path_to_auditions %}
 
-{% block title %}
-home
-{% endblock title %}
+<!doctype html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<!-- jQuery -->
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<!--Custom css-->
+		<link rel="stylesheet" type="text/css" href={% static 'style.css' %}>
+		<!-- semantic UI -->
+		<link rel="stylesheet" type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 
-{% block content %}
-
-
-{% comment %} <div class="ui placeholder segment">
-	<div class="ui two column very 
-			relaxed stackable grid">
-		<div class="middle aligned column">
-			<div class="ui container">
-				<div style="font-size:50px" face = "Times New Roman" Color="darkblue" align="center">
-					<p><b>Apply, Audition, Land the Part & make your Mark!!</b></p>
-				</div>
-				<div style="font-size:18px" face = "verdana" Color="black" align="justify">
-					<p><b>Chance your Future, Becoming a celebrity is now only a click away, Build your portfolio and let it speak for you.</b></p>
+	
+		<title>Dream Maker - Home</title>
+  	</head>
+  	<body>
+		<!-- Page Contents -->
+		<div class="ui container headerHome" style="background-image: url({% static 'images/bg_wall4.png' %});">
+			<div class="ui menu homenav">
+				<a href="{{path_to_home}}" class="{% if request.path == path_to_home %}active{% endif %} itemHome">
+					<img src="{% static 'images/logo_2.png' %}" class="logo">
+				</a>
+				<div class="right menu">
+					{% if request.user.is_authenticated %}
+						<a href="{% url 'account_logout' %}" class="ui itemHome">
+							<i class="power off icon"></i>
+							Logout
+						</a>
+					{% else %}
+						<a href="{% url 'account_login' %}" class="ui itemHome">
+							<i class="sign in alternate icon icon"></i>
+							Login
+						</a>
+					{% endif %}
 				</div>
 			</div>
-		</div>
-		<div class="middle aligned column">
-			<div class="ui container">
-				{% load static %} <img src="{% static "images/audi.jpg" %}" alt="stage" align="right" style="width:550px;height:380px;"/ >
+			<div class="ui masthead left aligned right floated segment">
+				<h1>ANY AUDITION</h1>
+				<h1>ANY TIME</h1>
+				<h1>ANY WHERE</h1>
+				<div class="description">
+					New way to find auditions & participants. If you are one of those thousands of people 
+					who struggle to find auditions or participants for auditions, this is for you.
+				</div>
+				<a href="{{path_to_auditions}}"> <button class="ui massive violet button">Auditions</button></a>
+				<a href="{{path_to_posts}}"> <button class="ui massive violet button">Participants</button></a>
 			</div>
 		</div>
-	</div>
-	<div class="ui vertical divider">
-
-	</div>
-</div> {% endcomment %}
+		
+	</body>
 
 
-
-<div class="center">
-	<div class="massive ui blue button" tabindex="0" >
-		I'm Looking for an Audition
-	</div>
-
-  <div class="massive ui blue button" tabindex="0">
-	I'm Looking for participants
-  </div>
-</div>
-
-{% endblock content %}
-
-
-
-
-{% block scripts %}
-<script>
-   $(document).ready(function(){
-	console.log('working')
-	})
-</script>
-{% endblock scripts %}

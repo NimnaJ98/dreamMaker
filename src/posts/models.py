@@ -8,8 +8,10 @@ from profiles.models import Profile
 
 class Post(models.Model):
     content = models.TextField()
-    image = models.ImageField(upload_to='posts', validators=[FileExtensionValidator(['png', 'jpg', 'jpeg'])], blank=True)
-    video =  models.FileField(upload_to='videos/', blank= True, validators=[FileExtensionValidator(['mp4'])])
+    image = models.ImageField(upload_to='posts', 
+                        validators=[FileExtensionValidator(['png', 'jpg', 'jpeg'])], blank=True)
+    video =  models.FileField(upload_to='videos/', blank= True, null=True, 
+                                                validators=[FileExtensionValidator(['mp4'])])
     liked = models.ManyToManyField(Profile, blank=True, related_name='likes')
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)

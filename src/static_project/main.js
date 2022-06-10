@@ -1,4 +1,4 @@
-document.getElementById('vid').play();
+// document.getElementById('vid').play();
 
 $(document).ready(function(){
    $('#modal-btn').click(function(){

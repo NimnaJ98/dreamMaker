@@ -77,13 +77,10 @@ def like_unlike_post(request):
                 like.value = 'Like'
         else:
             like.value = 'Like'
-
             post_obj.save()
             like.save()
-
         data ={
-            'value': like.value,
-            'likes': post_obj.liked.all().count()
+            'value': like.value, 'likes': post_obj.liked.all().count()
         }
         return JsonResponse(data, safe= False)
     

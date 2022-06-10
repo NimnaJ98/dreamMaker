@@ -1,10 +1,11 @@
+from email import message
 from django.shortcuts import render
 from .models import Audition, Star
 from profiles.models import Profile
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, DeleteView
-from .forms import AuditionModelForm
+from .forms import AuditionForm
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
@@ -18,25 +19,25 @@ def createAuditions_view(request):
     profile = Profile.objects.get(user=request.user)
 
     #audition_form
-    a_form = AuditionModelForm()
-    audition_added = False
+    a_form = AuditionForm()
 
     if 'submit_a_form' in request.POST:
-        print(request.POST)
-        a_form = AuditionModelForm(request.POST, request.FILES)
+        a_form = AuditionForm(request.POST, request.FILES)
         if a_form.is_valid():
             instance = a_form.save(commit=False)
-            instance.author = profile
+            instance.director = profile
             instance.save()
-            a_form = AuditionModelForm()
-            audition_added = True
+            a_form = AuditionForm()
+            messages.success(request, ('Your audition was successfully added!'))
+        else:
+            messages.error(request, 'Error saving form')
+    
         return redirect('auditions:main-audition-view')
 
     context = {
         'qs': qs,
         'profile': profile,
-        'a_form': a_form,
-        'audition_added':audition_added
+        'a_form':a_form
     }
 
     return render(request, 'auditions/audition.html', context)
@@ -88,7 +89,7 @@ class AuditionDeleteView(LoginRequiredMixin, DeleteView):
         return obj
 
 class AuditionUpdateView(LoginRequiredMixin, UpdateView):
-    form_class = AuditionModelForm
+    form_class = AuditionForm
     model = Audition
     template_name = 'auditions/update.html'
     success_url= reverse_lazy('auditions:main-audition-view')

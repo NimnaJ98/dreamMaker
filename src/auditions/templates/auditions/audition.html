@@ -66,10 +66,10 @@
             {% if audition_added %}
                 <div class="ui green message">Audition added</div>
             {% endif %}
-            <form action="" method="POST" class='ui form' enctype="multipart/form-data">
+            <form method="POST" enctype="multipart/form-data" class='ui form'>
                 {% csrf_token %}
                 {{a_form.as_p}}
-                <button type='submit' name="submit_p_form" class="ui positive button btnSend w-full mt-5">Send</button>
+                <button type='submit' name="submit_a_form" class="ui positive button btnSend w-full mt-5">Send</button>
             </form>
         </div>
     </div>

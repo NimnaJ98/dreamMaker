@@ -64,7 +64,9 @@
                 <div class="mb-5" style="margin-bottom:5px !important;">
                   
                 </div>
-                <button class="cmt_btn ui button mb-5" style="margin-bottom:5px !important;">show / hide comments</button>
+                <button class="cmt_btn ui button mb-5" style="margin-bottom:5px !important;">
+                    show / hide comments
+                </button>
                 <div class="comment-box" style="display: none !important;">
                 {% if obj.comment_set.all %}
                     {% for c in obj.comment_set.all %}

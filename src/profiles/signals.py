@@ -7,8 +7,6 @@ from .models import Profile, Relationship
 #create a profile automatically whenever a user is created. 
 @receiver(post_save, sender=User)
 def post_save_create_profile(sender, instance, created, **kwargs):
-    #print('sender', sender)
-    #print('instance',instance)
     if created:
         Profile.objects.create(user = instance)
 

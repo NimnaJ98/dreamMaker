@@ -51,7 +51,7 @@
                             <div class="ui vertical fluid menu" style="border-radius: 20px;">
                                 <div class="item">
                                     Name
-                                    <div class="ui purple label"><a href="{% url 'profiles:profile-detail-view' profile.slug %}"> {{ profile.first_name }} &nbsp; {{ profile.last_name }} </a></div>
+                                    <div class="ui purple label"><a href="{% url 'profiles:profile-detail-view' profile.slug %}"> {{profile.user}} </a></div>
                                 </div>
                                 <div class="item">
                                     Posts
@@ -68,11 +68,11 @@
                             </div>
                         </div>
                         <div class="ten wide column">
-                            <table class="ui celled orange table" style="border-color: #a28095;"> 
+                            <table class="ui violet table"> 
                                 <tbody>
                                     <tr>
                                         <td>Name</td>
-                                        <td>{{profile.user}}</td>
+                                        <td> {{ profile.first_name }} &nbsp; {{ profile.last_name }} </td>
                                     </tr>
                                     <tr>
                                         <td>Bio</td>
