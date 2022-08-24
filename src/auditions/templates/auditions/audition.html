@@ -3,7 +3,9 @@
 {% block title %}auditions page{% endblock title %}
 
 {% block content %}
-
+{% if audition_added %}
+    <div class="ui purple message" style="width: 75%;" >Audition added</div>
+{% endif %}
 
 <div class="ui grid mt-5" style="width: 75%; margin: auto;">
     <div class="twelve wide column">
@@ -36,10 +38,10 @@
                 <p> Due Date: {{ obj.due_date }} </p>
                 <p>Additional Info: {{ obj.additional_info }} </p>
                 <div class="right floated">
-                    <form action="{% url 'auditions:star-audition-view' %}" method="POST" class="like-form" id="{{obj.id}}">
+                    <form action="{% url 'auditions:star-audition-view' %}" method="POST" class="aud-form" id="{{obj.id}}">
                         {% csrf_token %}
                         <input type="hidden" name="audition_id" value={{obj.id}}>
-                            <button type="submit" class="ui button like-btn{{obj.id}}">
+                            <button type="submit" class="ui button star-btn{{obj.id}}">
                                 {% if profile not in obj.starred.all %}
                                     Star
                                 {% else %}
@@ -49,7 +51,7 @@
                             <br>
                             <div class="ui grid">
                                 <div class="column">
-                                    <div class="like-count{{obj.id}}"> {{obj.num_stars}} </div>
+                                    <div class="star-count{{obj.id}}"> {{obj.num_stars}} </div>
                                 </div>
                                 <div class="column">
                                     Stars
@@ -63,10 +65,8 @@
     </div>
     <div class="four wide column">
         <div class="ui segment" style="width: 400px !important; margin-left: 35px;">
-            {% if audition_added %}
-                <div class="ui green message">Audition added</div>
-            {% endif %}
-            <form method="POST" enctype="multipart/form-data" class='ui form'>
+            
+            <form action="" method="POST" enctype="multipart/form-data" class='ui form'>
                 {% csrf_token %}
                 {{a_form.as_p}}
                 <button type='submit' name="submit_a_form" class="ui positive button btnSend w-full mt-5">Send</button>
@@ -76,3 +76,49 @@
 </div>
 {% endblock content %}
 
+{% block scripts %} 
+    <script>
+        $( document ).ready(function() {
+            let display = false
+
+            $('.aud-form').submit(function(e){
+                e.preventDefault()
+
+                const audition_id = $(this).attr('id')
+                const likeText = $(`.star-btn${audition_id}`).text()
+                const trim = $.trim(likeText)
+
+                const url = $(this).attr('action')
+
+                let res;
+                const stars = $(`.star-count${audition_id}`).text()
+                const trimCount = parseInt(stars)
+
+                
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: {
+                        'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+                        'audition_id':audition_id,
+                    },
+                    success: function(response){
+                        if(trim== 'Unstar'){
+                            $(`.star-btn${audition_id}`).text('Star')
+                            res = trimCount - 1
+                        }else{
+                            $(`.star-btn${audition_id}`).text('Unstar')
+                            res = trimCount + 1
+                        }
+
+                        $(`.star-count${audition_id}`).text(res)
+                    }, 
+                    error: function(response){
+                        console.log('error', response)
+                    }
+                })
+
+            })
+        });
+    </script>
+{% endblock scripts %}

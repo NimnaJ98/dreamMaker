@@ -29,7 +29,7 @@ class Audition(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['due_date']
+        ordering = ['-updated']
 
     def __str__(self):
         return self.name
@@ -54,4 +54,4 @@ class Star(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return f"{self.user}-{self.post}-{self.value}"
+        return f"{self.user}-{self.audition}-{self.value}"

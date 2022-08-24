@@ -17,27 +17,24 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 def createAuditions_view(request):
     qs = Audition.objects.all()
     profile = Profile.objects.get(user=request.user)
+    audition_added = False
 
     #audition_form
-    a_form = AuditionForm()
+    a_form = AuditionForm(request.POST or None, request.FILES or None)
+    profile = Profile.objects.get(user = request.user)
 
-    if 'submit_a_form' in request.POST:
-        a_form = AuditionForm(request.POST, request.FILES)
-        if a_form.is_valid():
-            instance = a_form.save(commit=False)
-            instance.director = profile
-            instance.save()
-            a_form = AuditionForm()
-            messages.success(request, ('Your audition was successfully added!'))
-        else:
-            messages.error(request, 'Error saving form')
-    
-        return redirect('auditions:main-audition-view')
+    if a_form.is_valid():
+        instance = a_form.save(commit=False)
+        instance.director = profile
+        instance.save()
+        audition_added = True
+        a_form = AuditionForm()
 
     context = {
         'qs': qs,
         'profile': profile,
-        'a_form':a_form
+        'a_form':a_form,
+        'audition_added':audition_added
     }
 
     return render(request, 'auditions/audition.html', context)
@@ -70,7 +67,7 @@ def star_unstar_auditions(request):
 
         data ={
             'value': star.value,
-            'likes': aud_obj.starred.all().count()
+            'stars': aud_obj.starred.all().count()
         }
         return JsonResponse(data, safe= False)
     
