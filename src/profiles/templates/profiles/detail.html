@@ -73,6 +73,11 @@
                                 {% if post.image %}
                                     <img src={{post.image.url}}>
                                 {% endif %}
+                                {% if post.video %}
+                                    <video controls autoplay muted id="vid" style="width:500px;height:255px;">
+                                        <source src={{post.video.url}} type="video/mp4"></source> 
+                                    </video>
+                                {% endif %}
                             </div>
                             <div class="content">
                                 <p>{{post.content}}</p>

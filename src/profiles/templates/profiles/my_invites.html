@@ -22,7 +22,7 @@
                     <div class="thirteen wide column">
                         <h3>{{obj.user}}</h3>
                         <p>{{obj.bio}}</p>
-                        <a href=""><button class="ui black button w-big mb-5">See Profile</button></a>
+                        <a href={{obj.get_absolute_url}}><button class="ui black button w-big mb-5">See Profile</button></a>
                         <p></p>
                         
                         <form action="{% url 'profiles:accept-invite' %}" method="post">
