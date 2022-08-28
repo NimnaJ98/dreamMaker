@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    Auditions Detail
+{% endblock title %}
+
+
+{% block content %}
+    <div class="ui grid mt-5" style="width: 75%; margin: auto;">
+        <br>
+        <div class="row">
+            <div class="five wide column">
+                <img class="ui medium rounded image" src={{object.avatar.url}}>
+                <h1>{{object.user}}</h1>
+                <div class="ui vertical fluid menu" style="border-radius: 20px;">
+                    <div class="item">
+                        Posts
+                        <div class="ui label"><a href="{% url 'profiles:profile-detail-view' profile.slug %}">{{ object.get_post_no }}</a></div>
+                    </div>
+                    <div class="item">
+                        Auditions
+                        <div class="ui label"><a href="{% url 'profiles:profile-audition-view' profile.slug %}">{{ object.get_audition_no }} </a></div>
+                    </div>
+                    <div class="item">
+                        Likes Received
+                        <div class="ui label">{{ object.get_likes_received_no }}</div>
+                    </div>
+                    <div class="item">
+                        Friends
+                        <div class="ui label">{{ object.get_friends_no }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="eleven wide column">
+                
+                {% if len_auds %}
+                    
+                    {% for audition in auditions %}
+                        <div class="segment ui fluid">
+                            <div class="ui fluid image">
+                                {% if audition.image %}
+                                    <img src={{audition.image.url}}>
+                                {% endif %}
+                            </div>
+                            <div class="content">
+                                <p class="mt-2">{{audition.name}}</p>
+                                <p><strong>Qualifications : </strong>{{audition.qualifications}}</p>
+                                <p><strong>Requirements : </strong>{{audition.requirements}}</p>
+                                <p><strong>Due Date : </strong>{{audition.due_date}}</p>
+                            </div>
+                        </div>
+                    {% endfor %} 
+                        
+                {% else %}
+                    <div class="ui purple message" style="margin-top: 25px; border-radius: 25px;">No auditions yet...</div>
+                {% endif %}
+                    
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -55,15 +55,19 @@
                                 </div>
                                 <div class="item">
                                     Posts
-                                    <div class="ui label">{{ profile.get_post_no }}</div>
+                                    <div class="ui label"><a href="{% url 'profiles:profile-detail-view' profile.slug %}"> {{ profile.get_post_no }}</a></div>
                                 </div>
                                 <div class="item">
                                     Auditions
-                                    <div class="ui label">{{ profile.get_audition_no }}</div>
+                                    <div class="ui label"><a href="{% url 'profiles:profile-audition-view' profile.slug %}"> {{ profile.get_audition_no }}</a></div>
                                 </div>
                                 <div class="item">
                                     Friends
                                     <div class="ui label">{{ profile.get_friends_no }}</div>
+                                </div>
+                                <div class="item">
+                                    Participants
+                                    <div class="ui label"><a href="{% url 'auditions:my-participants-view' %}">Check</a></div>
                                 </div>
                             </div>
                         </div>

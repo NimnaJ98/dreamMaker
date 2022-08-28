@@ -55,3 +55,39 @@ class Star(models.Model):
     
     def __str__(self):
         return f"{self.user}-{self.audition}-{self.value}"
+
+
+STATUS_CHOICES = (
+    ('requested','requested'),
+    ('accepted','accepted')
+)
+
+class ParticipateManager(models.Manager):
+    def requests_received(self, audition):
+        qs = Participate.objects.filter(audition=audition, status='requested')
+        return qs 
+
+class Participate(models.Model): 
+    participant = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='participant')
+    audition = models.ForeignKey(Audition, on_delete=models.CASCADE, related_name='audition')
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+
+    fullname = models.CharField(max_length=200, blank=True)
+    age = models.CharField(max_length=200, blank=True)
+    gender = models.CharField(max_length=200, blank=True)
+    email = models.EmailField(max_length=200, blank=True)
+    address = models.CharField(max_length=200, blank=True)
+    photo = models.ImageField(default = 'avatar.png', upload_to = 'participants')
+    education = models.CharField(max_length=200, blank=True)
+    qualifications = models.CharField(max_length=200, blank=True)
+    experience = models.CharField(max_length=200, blank=True)
+
+    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    objects = ParticipateManager()
+
+
+
+    def __str__(self):
+        return f"{self.participant}-{self.audition}-{self.status}"

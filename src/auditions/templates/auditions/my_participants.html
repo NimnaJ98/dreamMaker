@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    My Participants
+{% endblock title %}
+
+
+{% block content %}   
+    {% for participant in participants %}
+        {% if participant.audition in qs %}
+            <div class="ui segment" style="width: 75%; margin: auto;">
+                <div class="ui grid">
+                    <div class="row">
+                        <div class="three wide column">
+                            <img class="ui image" src={{participant.photo.url}}>
+                        </div>
+                        <div class="thirteen wide column">
+                            <h3>{{participant.fullname}}</h3>
+                            <p> <strong> Partecipated for : </strong>{{participant.audition}}</p>
+                            <p> <strong> Age : </strong>{{participant.age}}</p>
+                            <p> <strong> Gender : </strong>{{participant.gender}}</p>
+                            <p> <strong> Email : </strong>{{participant.email}}</p>
+                            <p> <strong> Address : </strong>{{participant.address}}</p>
+                            <p> <strong> Education : </strong>{{participant.education}}</p>
+                            <p> <strong> Qualifications : </strong>{{participant.qualifications}}</p>
+                            <p> <strong> Experience : </strong>{{participant.experience}}</p>
+                            <p></p>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}   
+    
+{% endblock content %}

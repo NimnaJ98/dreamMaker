@@ -83,6 +83,9 @@ class Profile(models.Model):
     #to grab all the posts to show in Profile
     def get_all_authors_posts(self):
         return self.posts.all()
+    
+    def get_all_authors_auditions(self):
+        return self.auditions.all()
 
     #to grab the no of likes given by the user
     def get_likes_given_no(self):

@@ -1,12 +1,13 @@
 from email import message
+import profile
 from django.shortcuts import render
-from .models import Audition, Star
+from .models import Audition, Star, Participate
 from profiles.models import Profile
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, DeleteView
-from .forms import AuditionForm
-from django.shortcuts import render, redirect
+from .forms import AuditionForm, ParticipationForm
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -19,21 +20,44 @@ def createAuditions_view(request):
     profile = Profile.objects.get(user=request.user)
     audition_added = False
 
+    #Audition and Participation Forms
+    a_form = AuditionForm()
+    j_form = ParticipationForm()
+
     #audition_form
     a_form = AuditionForm(request.POST or None, request.FILES or None)
     profile = Profile.objects.get(user = request.user)
 
-    if a_form.is_valid():
-        instance = a_form.save(commit=False)
-        instance.director = profile
-        instance.save()
-        audition_added = True
-        a_form = AuditionForm()
+    if 'submit_a_form' in request.POST:
+        print(request.POST)
+        a_form = AuditionForm(request.POST, request.FILES)
+
+        if a_form.is_valid():
+            instance = a_form.save(commit=False)
+            instance.director = profile
+            instance.save()
+            audition_added = True
+            a_form = AuditionForm()
+        return redirect('auditions:main-audition-view')
+
+    if 'submit_j_form' in request.POST:
+        print(request.POST)
+        j_form = ParticipationForm(request.POST, request.FILES)
+
+        if j_form.is_valid():
+            instance = j_form.save(commit=False)
+            instance.participant = profile
+            instance.audition = Audition.objects.get(id=request.POST.get('audition_id'))
+            instance.status = 'requested'
+            instance.save()
+            j_form = ParticipationForm()
+        return redirect('auditions:main-audition-view')
 
     context = {
         'qs': qs,
         'profile': profile,
         'a_form':a_form,
+        'j_form':j_form,
         'audition_added':audition_added
     }
 
@@ -99,3 +123,17 @@ class AuditionUpdateView(LoginRequiredMixin, UpdateView):
         else:
             form.add_error(None, "You need to be the author of the post in order to update it.")
             return super().form_invalid(form)
+
+@login_required
+def participation_requests_view(request):
+    participants = Participate.objects.all()
+    profile = Profile.objects.get(user=request.user)
+    qs = Profile.get_all_authors_auditions(profile)
+        
+    context = {
+        'participants':participants, 
+        'qs':qs
+        }
+
+    return render(request, 'auditions/my_participants.html', context)
+

@@ -16,11 +16,11 @@
                 <div class="ui vertical fluid menu" style="border-radius: 20px;">
                     <div class="item">
                         Posts
-                        <div class="ui label">{{ object.get_post_no }}</div>
+                        <div class="ui label"><a href="{% url 'profiles:profile-detail-view' profile.slug %}">{{ object.get_post_no }}</a></div>
                     </div>
                     <div class="item">
                         Auditions
-                        <div class="ui label">{{ object.get_audition_no }}</div>
+                        <div class="ui label"><a href="{% url 'profiles:profile-audition-view' profile.slug %}">{{ object.get_audition_no }} </a></div>
                     </div>
                     <div class="item">
                         Likes Received

@@ -37,6 +37,7 @@
                 <p> Requirements: {{ obj.requirements }} </p>
                 <p> Due Date: {{ obj.due_date }} </p>
                 <p>Additional Info: {{ obj.additional_info }} </p>
+                
                 <div class="right floated">
                     <form action="{% url 'auditions:star-audition-view' %}" method="POST" class="aud-form" id="{{obj.id}}">
                         {% csrf_token %}
@@ -48,6 +49,7 @@
                                     Unstar
                                 {% endif %}
                             </button>
+                        
                             <br>
                             <div class="ui grid">
                                 <div class="column">
@@ -59,10 +61,34 @@
                             </div> 
                     </form>
                 </div>
+                <div class="left floated">
+                    <button class="joinAud ui button mb-5" style="margin-bottom:5px !important;">
+                        Join
+                    </button>
+                    
+                    <div class="aud-form-box mt-2" style="display: none !important;">
+                        <form action="" method="POST"class='ui fluid form'>
+                            {% csrf_token %}
+                            <input type="hidden" name="audition_id" value={{obj.id}}>
+                            {{ j_form.as_p }}
+                            <button type="submit" name="submit_j_form" class="ui primary button mt-5 w-full">Add Participation</button>
+                        </form>
+                    </div>
+                </div>
+                
             </div>
         </div>
     {% endfor %}
+</div>
+<div class="ui modal">
+    <i class="close icon"></i>
+    <div class="header">
+        Join Audition
     </div>
+    <div class="content">
+        
+    </div>
+</div>
     <div class="four wide column">
         <div class="ui segment" style="width: 400px !important; margin-left: 35px;">
             
@@ -74,13 +100,23 @@
         </div>
     </div>
 </div>
+
+
 {% endblock content %}
 
 {% block scripts %} 
     <script>
         $( document ).ready(function() {
             let display = false
-
+            $(".joinAud").click(function () {
+                if (display===false) {
+                    $(this).next(".aud-form-box").show("slow");
+                    display=true
+                } else {
+                    $(this).next(".aud-form-box").hide("slow");
+                    display=false
+                }  
+            });
             $('.aud-form').submit(function(e){
                 e.preventDefault()
 
@@ -118,7 +154,7 @@
                     }
                 })
 
-            })
+            }); 
         });
     </script>
 {% endblock scripts %}

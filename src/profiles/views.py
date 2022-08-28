@@ -91,7 +91,7 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
     def get_object(self, Slug=None):
         slug = self.kwargs.get('slug')
         profile = Profile.objects.get(slug=slug)
-        return profile
+        return profile 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -140,6 +140,35 @@ class ProfileListView(LoginRequiredMixin, ListView):
         if len(self.get_queryset())==0:
             context['is_empty']=True
         
+        return context
+
+class ProfileAuditionView(LoginRequiredMixin, DetailView):
+    model = Profile
+    template_name = 'profiles/auddetail.html'
+
+    def get_object(self, Slug=None):
+        slug = self.kwargs.get('slug')
+        profile = Profile.objects.get(slug=slug)
+        return profile
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = User.objects.get(username__iexact=self.request.user)
+        profile = Profile.objects.get(user=user)
+        rel_r = Relationship.objects.filter(sender=profile)
+        rel_s = Relationship.objects.filter(receiver=profile)
+        rel_receiver = []
+        rel_sender = []
+        for item in rel_r:
+            rel_receiver.append(item.receiver.user)
+        for item in rel_s:
+            rel_sender.append(item.sender.user) 
+        context["rel_receiver"] = rel_receiver
+        context["rel_sender"] = rel_sender
+        #to get all the posts from a user, by using the method created in models page
+        context['auditions']=self.get_object().get_all_authors_auditions()
+        context['len_auds']= True if len(self.get_object().get_all_authors_auditions())> 0 else False
+                
         return context
 
 @login_required
