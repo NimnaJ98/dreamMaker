@@ -40,16 +40,37 @@ class Audition(models.Model):
     def num_stars(self):
         return self.starred.all().count()
 
+    def all_participants(self):
+        return self.participants.all()
+    
+    def num_participants(self):
+        return self.participants.all().count()
+
     
 STAR_CHOICES = (
     ('Star', 'Star'),
     ('Unstar', 'Unstar'),
 )
 
+PARTICIPATE_CHOICES = (
+    ('Interested', 'Interested'),
+    ('Not', 'Not'),
+)
+
 class Star(models.Model): 
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     audition = models.ForeignKey(Audition, on_delete=models.CASCADE)
     value = models.CharField(choices=STAR_CHOICES, max_length=8)
+    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.user}-{self.audition}-{self.value}"
+
+class Participant(models.Model): 
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    audition = models.ForeignKey(Audition, on_delete=models.CASCADE)
+    value = models.CharField(choices=PARTICIPATE_CHOICES, max_length=25)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
     

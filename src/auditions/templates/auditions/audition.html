@@ -59,6 +59,44 @@
                             </div> 
                     </form>
                 </div>
+                <form action="{% url 'auditions:participate-audition-view' %}" method="POST" class="aud-form1" id="{{obj.id}}">
+                    {% csrf_token %}
+                    <input type="hidden" name="audition_id" value={{obj.id}}>
+                        <button type="submit" class="ui button participant-btn{{obj.id}}">
+                            {% if profile not in obj.participants.all %}
+                                Participate
+                            {% else %}
+                                Unparticipate
+                            {% endif %}
+                        </button>
+                        <br>
+                        <div class="ui grid">
+                            <div class="column">
+                                <div class="participant-count{{obj.id}}"> {{obj.num_participants}} </div>
+                            </div>
+                            <div class="column">
+                                Participants
+                            </div>
+                        </div> 
+                </form>
+            </div>
+            <div class="extra content">
+                <button class="participants_btn ui button mb-5" style="margin-bottom:5px !important;">
+                    show / hide participants
+                </button>
+                <div class="participants-box" >
+                {% if obj.participants.all %}
+                    {% for c in obj.participants.all %}
+                    
+                        <div class="ui segment mb-5" style="margin-bottom:5px !important;">
+                            <img class="ui avatar image" src={{c.user.avatar.url}}>
+                            <span>{{ c.user }}</span>
+                            <div class='mt-5'>{{ c.body }}</div>
+                        </div>
+                    
+                    {% endfor %}
+                {% endif %}
+                </div>
             </div>
         </div>
     {% endfor %}
@@ -80,6 +118,55 @@
     <script>
         $( document ).ready(function() {
             let display = false
+            $(".participants_btn").click(function () {
+                if (display===false) {
+                    $(this).next(".participants-box").show("slow");
+                    display=true
+                } else {
+                    $(this).next(".participants-box").hide("slow");
+                    display=false
+                }  
+            });
+
+            $('.aud-form1').submit(function(e){
+                e.preventDefault()
+                
+                const audition_id = $(this).attr('id')
+                const likeText1 = $(`.participant-btn${audition_id}`).text()
+                const trimText = $.trim(likeText1)
+
+                const url = $(this).attr('action')
+
+                let res;
+                const participants = $(`.participant-count${audition_id}`).text()
+                const trimCountparticipants = parseInt(participants)
+
+                
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: {
+                        'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+                        'audition_id':audition_id,
+                    },
+                    success: function(response){
+                        debugger
+                        if(trimText== 'Unparticipate'){
+                            $(`.participant-btn${audition_id}`).text('Participate')
+                            res = trimCountparticipants - 1
+                        }else{
+                            $(`.participant-btn${audition_id}`).text('Unparticipate')
+                            res = trimCountparticipants + 1
+                        }
+
+                        $(`.participant-count${audition_id}`).text(res)
+                    }, 
+                    error: function(response){
+                        console.log('error', response)
+                    }
+                })
+
+            })
 
             $('.aud-form').submit(function(e){
                 e.preventDefault()
